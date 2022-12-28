@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="style.css">
-    </head>
-  <body>
+<!DOCTYPE >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">    
+<head>
+    <title>Touch Up a Zotero HTML Export</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
     <style>
       .upload-area {
         width: 200px;
@@ -21,14 +22,15 @@
       }
     </style>
     <h2>Touch Up a Zotero HTML Export</h2>
-    <p>Export a bibliography from Zotero as an HTML file. Upload the HTML file here (it won't be saved on this server, merely parsed by the JavaScript of this page). Add a title for the page which will be shown in the title tag for the HTML and as a header above the list of bibliography items. Then add some additional text (you can include HTML) to be shown after the header but before the first entry of the bibliography. Press the green "Upload" button and the HTML will be modified accordingly offline in your browser and you can save the modified file with the blue "Save..." button. Finally: the new modified version will also now include a reference to an external "style.css" CSS file which you can use to determine the fonts, sizes, etc. for the document as a whole. You can use, for example, the <a href="style.css">one</a> that comes with this file to start with.<p>
-    <input type="file" id="fileInput" accept=".html" />
+    <p>Export a bibliography from Zotero as an HTML file. Upload the HTML file here (it won't be saved on this server, merely parsed by the JavaScript of this page). Add a title for the page which will be shown in the title tag for the HTML and as a header above the list of bibliography items. Then add some additional text (you can include HTML) to be shown after the header but before the first entry of the bibliography. Press the green "Upload" button and the HTML will be modified accordingly offline in your browser and you can save the modified file with the blue "Save..." button. Finally: the new modified version will also now include a reference to an external "style.css" CSS file which you can use to determine the fonts, sizes, etc. for the document as a whole. You can use, for example, the <a href="style.css">one</a> that comes with this file to start with.</p>
     <p>
+    <input type="file" id="fileInput" accept=".html" />
     <form id="form">
-      <label for="newTitle">Enter the new title for the HTML file:</label><br>
-      <input type="text" id="newTitle" value=""><br><br>
-      <label for="firstText">Enter some text to go before the bibliography:</label><br>
-      <textarea id="firstText" style="width: 400px; height: 100px;" value=""></textarea><br>       
+        <p>
+        <label for="newTitle">Enter the new title for the HTML file:</label><br /><br />
+        <input type="text" id="newTitle" value="" /></p><p>
+        <label for="firstText">Enter some text to go before the bibliography:</label><br />
+      <textarea id="firstText" style="width: 400px; height: 100px;" value=""></textarea></p>
     </form>
     </p>
     <button id="uploadButton" style="color: white; background-color: green;">Upload</button>
@@ -36,7 +38,8 @@
       <p>File has been modified and is ready to download.</p>
       <button id="downloadButton" style="color: white; background-color: blue;">Save Modified HTML File</button>
     </div>
-    <p><br />This script was written mostly with some frustrating exchanges with ChatGPT, then modified here and there by Konrad M. Lawson. 
+    <p><br />This script was written mostly with some frustrating exchanges with ChatGPT, then modified here and there by <a href="https://muninn.net/">Konrad M. Lawson</a>. Code can be found <a href="https://github.com/kmlawson/fix-zotero-html">here.</a>
+    </p>
     <script>
       // Get the file input element, upload button, and download container
       var fileInput = document.getElementById('fileInput');
@@ -99,5 +102,6 @@
         };
       });
     </script>
+</body>
 </html>
 
