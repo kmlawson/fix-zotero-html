@@ -1,0 +1,49 @@
+/* Set the default font to Helvetica */
+* {
+  font-family: Helvetica;
+}
+
+/* Set margins all around to 10 pixels */
+body {
+  margin: 20px;
+}
+
+/* Make links dark blue with a slightly lighter blue on mouseover */
+a {
+  color: #0000FF; /* dark blue */
+}
+a:hover {
+  color: #ADD8E6; /* light blue */
+}
+
+/* Set the maximum width of the page to 1500 pixels */
+body {
+  max-width: 1000px;
+}
+
+/* Add 10 pixels of padding to all form elements */
+form * {
+  padding: 10px;
+}
+
+/* Increase the line spacing */
+p, li {
+  line-height: 1.5;
+}
+
+/* Add padding, rounded edges, and a hover effect to buttons */
+button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px #666;
+}
+button:hover {
+  background: #999;
+  cursor: pointer;
+}
+button:active {
+  background: #333;
+  box-shadow: 0 1px #666;
+  transform: translateY(1px);
+}
+

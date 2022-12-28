@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+  <body>
+    <style>
+      .upload-area {
+        width: 200px;
+        height: 200px;
+        border: 2px dotted black;
+        background-color: #dddddd;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .upload-area input[type="file"]::-webkit-file-upload-button {
+        display: none;
+      }
+    </style>
+    <h2>Touch Up a Zotero HTML Export</h2>
+    <p>Export a bibliography from Zotero as an HTML file. Upload the HTML file here (it won't be saved on this server, merely parsed by the JavaScript of this page). Add a title for the page which will be shown in the title tag for the HTML and as a header above the list of bibliography items. Then add some additional text (you can include HTML) to be shown after the header but before the first entry of the bibliography. Press the green "Upload" button and the HTML will be modified accordingly offline in your browser and you can save the modified file with the blue "Save..." button. Finally: the new modified version will also now include a reference to an external "style.css" CSS file which you can use to determine the fonts, sizes, etc. for the document as a whole. You can use, for example, the <a href="style.css">one</a> that comes with this file to start with.<p>
+    <input type="file" id="fileInput" accept=".html" />
+    <p>
+    <form id="form">
+      <label for="newTitle">Enter the new title for the HTML file:</label><br>
+      <input type="text" id="newTitle" value=""><br><br>
+      <label for="firstText">Enter some text to go before the bibliography:</label><br>
+      <textarea id="firstText" style="width: 400px; height: 100px;" value=""></textarea><br>       
+    </form>
+    </p>
+    <button id="uploadButton" style="color: white; background-color: green;">Upload</button>
+    <div id="downloadContainer" style="display: none;">
+      <p>File has been modified and is ready to download.</p>
+      <button id="downloadButton" style="color: white; background-color: blue;">Save Modified HTML File</button>
+    </div>
+    <p><br />This script was written mostly with some frustrating exchanges with ChatGPT, then modified here and there by Konrad M. Lawson. 
+    <script>
+      // Get the file input element, upload button, and download container
+      var fileInput = document.getElementById('fileInput');
+      var uploadButton = document.getElementById('uploadButton');
+      var downloadContainer = document.getElementById('downloadContainer');
+      // Add an event listener for when the file is selected
+      fileInput.addEventListener('change', function() {
+        // Get the file
+        var file = fileInput.files[0];
+
+        // Update the upload button to trigger the modification of the file
+        uploadButton.onclick = function() {
+          // Create a new FileReader
+          var reader = new FileReader();
+          var newTitle = document.getElementById('newTitle').value;
+          var firstText = document.getElementById('firstText').value;
+          // Set the onload event for the reader
+          reader.onload = function() {
+            // Get the contents of the file as a string
+            var fileContents = reader.result;
+
+            // Replace the title tag with the new title
+            fileContents = fileContents.replace(/<title>(.+?)<\/title>/, '<title>' + newTitle + '</title>');
+
+            // Insert text and header before the relevant div:
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(fileContents, "text/html");
+            
+            var newHeader = document.createElement("h1");
+            newHeader.innerHTML = newTitle;
+            doc.querySelector(".csl-bib-body").before(newHeader);
+            
+            var newDiv = document.createElement("div");
+            newDiv.innerHTML = '<p>' + firstText + '<br /></p>';
+            doc.querySelector(".csl-bib-body").before(newDiv);
+
+            // Add a link to an external CSS file:
+            var link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            link.href = "style.css";
+            doc.querySelector("head").appendChild(link);
+                      
+            fileContents = doc.documentElement.outerHTML;
+
+            // Show the download container and update the download button to trigger a download of the modified file contents
+            downloadContainer.style.display = 'block';
+            var downloadButton = document.getElementById('downloadButton');
+            downloadButton.onclick = function() {
+              var a = document.createElement('a');
+              a.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(fileContents);
+              // a.download = 'modified.html';
+              a.download = file.name.replace('.html', '-modified.html');
+              a.click();
+            };
+          };
+
+          // Read the file as a string
+          reader.readAsText(file);
+        };
+      });
+    </script>
+</html>
+
